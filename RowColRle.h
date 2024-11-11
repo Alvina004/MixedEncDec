@@ -1,19 +1,23 @@
-#pragma once
-#include "RowCol.h"
-#include "RLE.h"
-#include <cstddef>
+#ifndef ROWCOLRLE_H
+#define ROWCOLRLE_H
 
-class RowColRLE {
+#include <string>
+
+class RowColRle {
 public:
-    RowColRLE();
-    virtual ~RowColRLE();
-
-    int Encrypt(const unsigned char* pSrc, unsigned int SrcSz, unsigned char* pOut, unsigned int& OutSz);
-    int Decrypt(const unsigned char* pSrc, unsigned int SrcSz, unsigned char* pOut, unsigned int& OutSz);
-
-    void SetKey(unsigned int sz); 
+    RowColRle(unsigned int key = 3);
+    void setKey(unsigned int key);
+    unsigned int getKey() const;
+    std::string encrypt(const std::string& text);
+    std::string decrypt(const std::string& text);
 
 private:
-    rowcol m_rowCol;
-    RLE m_rle;      
+    unsigned int mkey;
+    std::string encryptRowCol(const std::string& text);
+    std::string decryptRowCol(const std::string& text);
+
+    std::string encryptRLE(const std::string& text);
+    std::string decryptRLE(const std::string& text);
 };
+
+#endif // ROWCOLRLE_H
